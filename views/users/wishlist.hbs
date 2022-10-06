@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+</head>
+
+<body class="animsition">
+
+	<!-- Header -->
+	<header class="header-v4">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			{{>user-header}}
+
+			<!-- breadcrumb -->
+			<div class="container">
+				<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+					<a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+						Home
+						<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+					</a>
+
+					<span class="stext-109 cl4">
+						Wishlist
+					</span>
+				</div>
+			</div>
+
+			{{#if empty}}
+			<div class="mt-5">
+				<p class="text-danger text-center" style="font-size: 20px;">
+					<strong>Your Wishlist is empty.</strong>
+					<a href="/shop" class="d-flex justify-content-center">
+						<p>Go to shop. Let's Add something to your wishlist!</p>
+					</a>
+				</p>
+			</div>
+			{{/if}}
+
+			<!-- Shopping Cart -->
+			<form class="bg0 p-t-75 p-b-85">
+				<div class="container">
+					<div class="row">
+						{{#if wishfill}}
+						<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+							<div class="m-l-25 m-r--38 m-lr-0-xl">
+								<div class="wrap-table-shopping-cart">
+									<table class="table-shopping-cart">
+										<tr class="table_head">
+											<th class="column-1">Product</th>
+											<th class="column-2">Title</th>
+											<th class="column-3">Price</th>
+											<th class="column-4"></th>
+											<th class="column-5"></th>
+										</tr>
+										{{#each wishlistItems}}
+										<tr class="table_row">
+
+											<td class="column-1">
+												<div class="how-itemcart1">
+													<img src="/images/productsImg/{{this.product.Image.[0]}}" alt="IMG">
+												</div>
+											</td>
+											<td class="column-2">
+												<a href="/productDetails/{{this.product._id}}">
+													{{this.product.productName}}
+												</a>
+											</td>
+											<td class="column-3">₹ {{this.product.sellPrice}}</td>
+											<td class="column-4">
+												<button onclick="addToCart('{{this.product._id}}','1','{{this.product.sellPrice}}')" class="btn btn-dark">
+													Add to Cart
+												</button>
+											</td>
+											<td class="column-5">
+												<a href="/removeWishlistItem/{{this.product._id}}"
+													class="text-danger">Remove</a>
+											</td>
+
+										</tr>
+										{{/each}}
+
+									</table>
+								</div>
+							</div>
+						</div>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+
+
+
+
+			<!-- Footer -->
+			{{>footer}}
+
+
+			<!-- Back to top -->
+			<div class="btn-back-to-top" id="myBtn">
+				<span class="symbol-btn-back-to-top">
+					<i class="zmdi zmdi-chevron-up"></i>
+				</span>
+			</div>
+
+			<!--===============================================================================================-->
+			<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/animsition/js/animsition.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/bootstrap/js/popper.js"></script>
+			<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/select2/select2.min.js"></script>
+			<script>
+				$(".js-select2").each(function () {
+					$(this).select2({
+						minimumResultsForSearch: 20,
+						dropdownParent: $(this).next('.dropDownSelect2')
+					});
+				})
+			</script>
+			<!--===============================================================================================-->
+			<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+			<!--===============================================================================================-->
+			<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+			<script>
+				$('.js-pscroll').each(function () {
+					$(this).css('position', 'relative');
+					$(this).css('overflow', 'hidden');
+					var ps = new PerfectScrollbar(this, {
+						wheelSpeed: 1,
+						scrollingThreshold: 1000,
+						wheelPropagation: false,
+					});
+
+					$(window).on('resize', function () {
+						ps.update();
+					})
+				});
+			</script>
+			<!--===============================================================================================-->
+			<script src="js/main.js"></script>
+
+</body>
+
+</html>

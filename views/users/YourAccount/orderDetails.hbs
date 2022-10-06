@@ -1,0 +1,255 @@
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="/images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/css/util.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/popper.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/select2/select2.min.js"></script>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    })
+</script>
+<!--===============================================================================================-->
+<script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        $(this).css('position', 'relative');
+        $(this).css('overflow', 'hidden');
+        var ps = new PerfectScrollbar(this, {
+            wheelSpeed: 1,
+            scrollingThreshold: 1000,
+            wheelPropagation: false,
+        });
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+</script>
+<style>
+    .error {
+        color: rgba(179, 0, 0, 0.842);
+    }
+</style>
+</head>
+
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            {{>user-header}}
+            <hr>
+
+            <div class="container mt-2 printableArea">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="text-left logo px-4 pt-4">
+                                <img src="/images/icons/logo-01.png">
+
+                                <button class="btn p-1 printBtn" onclick="window.print()">
+                                    <i class="fa fa-print" style="font-size:24px"></i>
+                                </button>
+
+                            </div>
+                            <div class="invoice p-5">
+                                <h5>Thanks for your Order, <strong>{{data.userID.yourname}} !</strong></h5>
+
+                                <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="py-2">
+                                                        <span class="d-block text-dark">
+                                                            <strong>Order Date</strong>
+                                                        </span>
+                                                        <span>{{format data.createdAt}}</span>
+                                                        <span class="d-block text-dark mt-3">
+                                                            <strong>Order Status</strong>
+                                                        </span>
+                                                        <span>{{data.orderStatus}}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="py-2">
+                                                        <span class="d-block text-dark">
+                                                            <strong>Order No</strong>
+                                                        </span>
+                                                        <span>#{{data._id}}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="py-2">
+                                                        <span class="d-block text-dark">
+                                                            <strong>Payment</strong>
+                                                        </span>
+                                                        <span>{{data.paymentMethod}}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="py-2">
+                                                        <span class="d-block text-dark">
+                                                            <strong>Shipping Address</strong>
+                                                        </span>
+                                                        <span>{{data.deliveryAddress.apartment}},
+                                                            {{data.deliveryAddress.street}},
+                                                            {{data.deliveryAddress.landmark}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="product border-bottom table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            {{#each data.products}}
+                                            <tr>
+                                                <td width="20%">
+                                                    <img src="/images/productsImg/{{this.product.Image.[0]}}"
+                                                        width="90">
+                                                </td>
+                                                <td width="60%">
+                                                    <span class="font-weight-bold">{{this.product.productName}}</span>
+                                                    <div class="product-qty">
+                                                        <span class="d-block">Quantity: {{this.quantity}}</span>
+                                                    </div>
+                                                </td>
+                                                <td width="20%">
+                                                    <div class="text-right">
+                                                        <span
+                                                            class="font-weight-bold">₹ {{this.product.sellPrice}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-md-5">
+                                        <table class="table table-borderless">
+                                            <tbody class="totals">
+                                                <tr>
+                                                    <td>
+                                                        <div class="text-left">
+                                                            <span class="text-muted">Subtotal</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-right">
+                                                            <span>₹ {{data.SubTotal}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="text-left">
+                                                            <span class="text-muted">Discount</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-right">
+                                                            <span class="text-success"> ₹ {{data.discount}} </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="border-top border-bottom">
+                                                    <td>
+                                                        <div class="text-left">
+                                                            <span class="font-weight-bold">Total</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-right">
+                                                            <span class="font-weight-bold">₹ {{data.Total}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <p>We will be sending shipping confirmation email when the item shipped successfully!
+                                </p>
+                                <p class="font-weight-bold mb-3">Thanks for shopping with us!</p>
+                                <span style="text-decoration: underline;">TEAM PRYINGCHESS</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+
+            <!-- Back to top -->
+            <div class="btn-back-to-top" id="myBtn">
+                <span class="symbol-btn-back-to-top">
+                    <i class="zmdi zmdi-chevron-up"></i>
+                </span>
+            </div>
+
+            <style>
+                @media print {
+                    body * {
+                        visibility: hidden;
+                    }
+                    .printBtn{
+                        z-index: -1;
+                    }
+
+                    .printableArea,
+                    .printableArea *{
+                        visibility: visible;
+                    }
+
+                    .printableArea {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    }
+                }
+            </style>
+            <!--===============================================================================================-->
+            <script src="/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/css/util.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+
+<style>
+    .error {
+        color: rgba(179, 0, 0, 0.842);
+    }
+</style>
+</head>
+
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            {{>user-header}}
+            <hr>
+
+            <div class="mb-3 mt-3">
+                <div class="container">
+                    <h3 class="mx-5 mt-2 text-dark fw-500 text-center">
+                        Your Orders
+                    </h3>
+                    <hr>
+
+                    <div class="container">
+                        <div class="row">
+                            {{#each orderData}}
+                            <div class="card col-9 border border-muted mb-3">
+                                <h6 class="card-title mt-3"><strong>Order ID:</strong> #{{this._id}}</h5>
+
+                                    {{#each this.products}}
+                                    <div class="body d-flex mt-2 mb-3">
+                                        <img src="/images/productsImg/{{this.product.Image.[0]}}" style="width: 50px;"
+                                            alt="ProductIMAGE">
+                                        <p class="card-text ml-3"><strong>{{this.product.productName}}</strong></p>
+                                    </div>
+                                    {{/each}}
+                                    <p id="status">{{this.orderStatus}}</p>
+                                    <p class="text-muted mb-3" style="font-size: 16px;">On {{format this.createdAt}}</p>
+                                    <hr class="my-4">
+
+                                    <div
+                                        class="d-flex flex-row justify-content-between align-items-center align-content-center">
+
+                                        <span id="{{this._id}}firstdot" class="dot"></span>
+                                        <hr class="flex-fill track-line" id="{{this._id}}firstline">
+                                        <span id="{{this._id}}seconddot" class="dot"></span>
+                                        <hr class="flex-fill track-line" id="{{this._id}}secondline">
+                                        <span id="{{this._id}}thirddot" class="dot"></span>
+                                        <hr class="flex-fill track-line" id="{{this._id}}thirdline">
+                                        <span id="{{this._id}}forthdot" class="dot"></span>
+                                        <hr class="flex-fill track-line" id="{{this._id}}forthline">
+                                        <span id="{{this._id}}fifthdot"
+                                            class="d-flex justify-content-center align-items-center dot">
+                                        </span>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-between align-items-center mb-5 font-weight-bold">
+
+                                        <div class="d-flex flex-column justify-content-center" id="{{this._id}}placed">
+                                            <span>Order
+                                                placed</span>
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center align-items-center"
+                                            id="{{this._id}}packed">
+                                            <span>Order Packed</span>
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center align-items-center"
+                                            id="{{this._id}}dispatched">
+                                            <span>Order Dispatched</span>
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center align-items-center"
+                                            id="{{this._id}}out">
+                                            <span>Out for delivery</span>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end" id="{{this._id}}delivered">
+                                            <span>Delivered</span>
+                                        </div>
+
+                                    </div>
+                            </div>
+                            <div
+                                class="d-flex flex-column justify-content-center ms-auto col-3 border border-muted mb-3">
+                                <a href="/orderDetails/{{this._id}}"
+                                    class="d-flex justify-content-center my-1 text-primary mb-5"><i class="fa fa-eye"
+                                        style="font-size:16px"> View Order Details</i></a>
+                                <a href="/cancelOrder/{{this._id}}"
+                                    class="d-flex justify-content-center my-1 text-danger">
+                                    <i class="fa fa-window-close" style="font-size:16px" id="{{this._id}}cancelBtn">
+                                        Cancel Order</i>
+                                </a>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    let status = '{{this.orderStatus}}'
+                                    let id = '{{this._id}}'
+
+                                    if (status === 'Confirmed') {
+                                        $(`#${id}seconddot, #${id}thirddot, #${id}forthdot, #${id}fifthdot`).addClass('active').removeClass('dot');
+                                        $(`#${id}firstline, #${id}secondline, #${id}thirdline, #${id}forthline`).addClass('blank-track-line').removeClass('track-line');
+                                    }
+                                    if (status === 'Packed') {
+                                        $(`#${id}thirddot, #${id}forthdot, #${id}fifthdot`).addClass('active').removeClass('dot');
+                                        $(`#${id}secondline, #${id}thirdline, #${id}forthline`).addClass('blank-track-line').removeClass('track-line');
+                                    }
+                                    if (status === 'Dispatched') {
+                                        $(`#${id}forthdot, #${id}fifthdot`).addClass('active').removeClass('dot');
+                                        $(`#${id}thirdline, #${id}forthline`).addClass('blank-track-line').removeClass('track-line');
+                                    }
+                                    if (status === 'outForDelivery') {
+                                        $(`#${id}fifthdot`).addClass('active').removeClass('dot');
+                                        $(`#${id}forthline`).addClass('blank-track-line').removeClass('track-line');
+                                    }
+                                    if (status === 'Delivered') {
+                                        $(`#${id}cancelBtn`).hide()
+                                    }
+                                    if (status === "Cancelled") {
+                                        $(`#${id}seconddot, #${id}thirddot, #${id}forthdot`).removeClass('dot')
+                                        $(`#${id}fifthdot, #${id}firstdot, #${id}firstline, #${id}secondline, #${id}thirdline, #${id}forthline`).css('background-color', 'red');
+                                        $(`#${id}placed, #${id}packed, #${id}dispatched, #${id}out`).replaceWith('');
+                                        $(`#${id}delivered`).html('<span class="text-danger"> Cancelled </span>');
+                                        $(`#${id}cancelBtn`).hide()
+                                    }
+                                })
+                            </script>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Back to top -->
+            <div class="btn-back-to-top" id="myBtn">
+                <span class="symbol-btn-back-to-top">
+                    <i class="zmdi zmdi-chevron-up"></i>
+                </span>
+            </div>
+
+
+            <style>
+                .card .bodycard {
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+                    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+                    cursor: pointer;
+                }
+
+                .card:hover {
+
+                    box-shadow: 0 5px 5px rgba(0, 0, 0, .05), 0 4px 4px rgba(0, 0, 0, .02);
+                }
+
+                .dot {
+                    height: 10px;
+                    width: 10px;
+                    margin: 0 3px 0 3px;
+                    background-color: rgb(42, 63, 255);
+                    border-radius: 50%;
+                    display: inline-block;
+                }
+
+                .track-line {
+                    height: 2px;
+                    width: 25%;
+                    background-color: rgb(42, 63, 255)
+                }
+
+                .blank-track-line {
+                    height: 2px;
+                    width: 25%;
+                    background-color: #adadad
+                }
+
+                .big-dot {
+                    height: 20px;
+                    width: 20px;
+                    background-color: #488978;
+                    border-radius: 50%;
+                }
+            </style>
+
+            <script type="text/javascript">
+                $('#confirmation').on('click', function () {
+                    return confirm('Are you sure?');
+                });
+            </script>
+            <!--===============================================================================================-->
+            <script src="/vendor/animsition/js/animsition.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/bootstrap/js/popper.js"></script>
+            <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/select2/select2.min.js"></script>
+            <script>
+                $(".js-select2").each(function () {
+                    $(this).select2({
+                        minimumResultsForSearch: 20,
+                        dropdownParent: $(this).next('.dropDownSelect2')
+                    });
+                })
+            </script>
+            <!--===============================================================================================-->
+            <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script>
+                $('.js-pscroll').each(function () {
+                    $(this).css('position', 'relative');
+                    $(this).css('overflow', 'hidden');
+                    var ps = new PerfectScrollbar(this, {
+                        wheelSpeed: 1,
+                        scrollingThreshold: 1000,
+                        wheelPropagation: false,
+                    });
+
+                    $(window).on('resize', function () {
+                        ps.update();
+                    })
+                });
+            </script>
+
+            <!--===============================================================================================-->
+            <script src="/js/main.js"></script>
+
+</body>
+
+</html>

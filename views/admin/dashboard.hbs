@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>PRYINGHCESS - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+
+    <style>
+        .dataTables_wrapper .dataTables_filter input {
+            margin-left: 10px;
+            background-color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="/admin/dashboard" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-dark"><i class=" me-2"></i>ADMIN PANEL</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="/images/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Ahamed Saheer</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="/admin/dashboard" class="nav-item nav-link active"><i
+                            class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="/admin/Users" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Users</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Categories</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/Category/viewCategory" class="dropdown-item">View Categories</a>
+                            <a href="/admin/Category/addCategory" class="dropdown-item">Add Category</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Products</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/Products/viewProducts" class="dropdown-item">View Products</a>
+                            <a href="/admin/Products/addproducts" class="dropdown-item">Add Products</a>
+                        </div>
+                    </div>
+                    <a href="/admin/orderData" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Coupons</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/coupons/viewCoupon" class="dropdown-item">View Coupons</a>
+                            <a href="/admin/coupons/addCoupon" class="dropdown-item">Add Coupons</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Banners</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/admin/banners/viewBanners" class="dropdown-item">View Banners</a>
+                            <a href="/admin/banners/addBanner" class="dropdown-item">Add Banner</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="/admin/dashboard" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-dark mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/images/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Ahamed Saheer</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="/admin/adminLogout" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Sale & Revenue Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-dark"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Today Sale</p>
+                                <h6 class="mb-0">₹ {{todaySaleCount}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-bar fa-3x text-dark"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Sale</p>
+                                <h6 class="mb-0">₹ {{totalSale}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-area fa-3x text-dark"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Today Orders</p>
+                                <h6 class="mb-0">{{todayOrderCount}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-pie fa-3x text-dark"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Orders</p>
+                                <h6 class="mb-0">{{totalOrders}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sale & Revenue End -->
+
+
+            <!-- Sales Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Order Data</h6>
+                            </div>
+                            <canvas id="userChart" style="width: 40px"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Sales Data</h6>
+                            </div>
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sales Chart End -->
+
+            <!-- Sales Report Table -->
+            <div class="container-fluid pt-3 px-3">
+                <div class="col-sm-12 mt-3 mb-3">
+                    <div class="bg-light text-center rounded p-4">
+                        <div class="d-flex justify-content-center mb-4">
+                            <h6 class="mb-0 fs-5">SALES REPORT</h6>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table">
+                                    <table class="table mb-0 display nowrap" id="salesReport"
+                                        data-order='[[ 0, "desc" ]]'>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    DATE
+                                                </th>
+                                                <th scope="col" class="d-flex justify-content-center">
+                                                    Order Id
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-center">Customer Id</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-center">TOTAL PRICE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-center">PAYMENT TYPE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-center"> PAYMENT STATUS</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each salesData}}
+                                            <tr>
+                                                <th scope="row" style="color: #666666;">
+                                                    <div class="d-flex justify-content-center">{{format
+                                                        this.createdAt}}
+                                                    </div>
+                                                </th>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <p>{{this._id}}</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <p>{{this.userID}}</p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="d-flex justify-content-center">₹ {{this.Total}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div
+                                                        class="d-flex justify-content-center text-decoration-underline">
+                                                        {{this.paymentMethod}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center badge alert-warning">
+                                                        {{this.paymentStatus}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <script>
+                                                var status = '{{this.orderStatus}}';
+                                                var id = '{{this._id}}'
+                                                var element = document.getElementById(`${id}order`);
+                                                var changeStatus = document.getElementById(`${id}change`);
+                                                var cancelStatus = document.getElementById(`${id}cancel`)
+                                                if (status === "Cancelled") {
+                                                    element.classList.remove("alert-info");
+                                                    element.classList.add("alert-danger");
+                                                }
+
+                                            </script>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                            </br>
+                            Distributed By <a class="border-bottom" href="https://themewagon.com"
+                                target="_blank">ThemeWagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-dark btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/chart/chart.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+    <script>
+        const newCtx = document.getElementById('userChart').getContext('2d');
+        const config = {
+            type: 'bar',
+            data: {
+                labels: [
+                    `{{eachDayOrderDetails.[5]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                    `{{eachDayOrderDetails.[4]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                    `{{eachDayOrderDetails.[3]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                    `{{eachDayOrderDetails.[2]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                    `{{eachDayOrderDetails.[1]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                    `{{eachDayOrderDetails.[0]._id.day}}/{{eachDayOrderDetails.[5]._id.month}}/{{eachDayOrderDetails.[5]._id.year}}`,
+                ],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [
+                        `{{eachDayOrderDetails.[5].count}}`,
+                        `{{eachDayOrderDetails.[4].count}}`,
+                        `{{eachDayOrderDetails.[3].count}}`,
+                        `{{eachDayOrderDetails.[2].count}}`,
+                        `{{eachDayOrderDetails.[1].count}}`,
+                        `{{eachDayOrderDetails.[0].count}}`,
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            }
+        }
+        const userChart = new Chart(newCtx, config);
+    </script>
+
+    <script>
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        var confi = {
+            type: 'line',
+            data: {
+                labels: [
+                    `{{eachDaySalesDetails.[5]._id.day}}/{{eachDaySalesDetails.[5]._id.month}}/{{eachDaySalesDetails.[5]._id.year}}`,
+                    `{{eachDaySalesDetails.[4]._id.day}}/{{eachDaySalesDetails.[4]._id.month}}/{{eachDaySalesDetails.[4]._id.year}}`,
+                    `{{eachDaySalesDetails.[3]._id.day}}/{{eachDaySalesDetails.[3]._id.month}}/{{eachDaySalesDetails.[3]._id.year}}`,
+                    `{{eachDaySalesDetails.[2]._id.day}}/{{eachDaySalesDetails.[2]._id.month}}/{{eachDaySalesDetails.[2]._id.year}}`,
+                    `{{eachDaySalesDetails.[1]._id.day}}/{{eachDaySalesDetails.[1]._id.month}}/{{eachDaySalesDetails.[1]._id.year}}`,
+                    `{{eachDaySalesDetails.[0]._id.day}}/{{eachDaySalesDetails.[0]._id.month}}/{{eachDaySalesDetails.[0]._id.year}}`],
+                datasets: [
+                    {
+                        label: null,
+                        data: [
+                            `{{eachDaySalesDetails.[5].totalSales}}`,
+                            `{{eachDaySalesDetails.[4].totalSales}}`,
+                            `{{eachDaySalesDetails.[3].totalSales}}`,
+                            `{{eachDaySalesDetails.[2].totalSales}}`,
+                            `{{eachDaySalesDetails.[1].totalSales}}`,
+                            `{{eachDaySalesDetails.[0].totalSales}}`
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        fill: false,
+                        stepped: true,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                    axis: 'x'
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Step ' + ctx.chart.data.datasets[0].stepped + ' Interpolation',
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            }
+        }
+        const salesChart = new Chart(ctx, confi);
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#salesReport').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    </script>
+
+    <!-- Template Javascript -->
+    <script src="/js/adminMain.js"></script>
+</body>
+
+</html>

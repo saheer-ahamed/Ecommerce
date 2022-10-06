@@ -1,0 +1,160 @@
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/css/util.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<style>
+    .error {
+        color: rgba(179, 0, 0, 0.842);
+    }
+</style>
+</head>
+
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            {{>user-header}}
+
+
+            <!-- Account Details -->
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-10 col-xl-6 m-b-50">
+                        <div class="m-l-25 m-r--38 m-lr-0-xl">
+                            <h4 class="mb-3"><strong>Account details</strong></h4>
+
+                            <form class="mt-5" id="mobile-form" action="/updateMobile" method="post">
+                                <div class="row align-items-center mb-4">
+                                    <div class="col-12 mb-3">
+                                        <input class="form-control bg-light" type="number" name="mobile"
+                                            placeholder="Enter Mobile Number" value="{{userDetails.mobile}}">
+                                    </div>
+                                </div>
+                                
+                                {{#if numExists}}
+                                <p class="font-sans-serif fs--1" style="color:rgba(179, 0, 0, 0.842);margin: -2.5rem 0 1rem 0;">
+                                    Mobile Number already exists. Try again with different number.
+                                </p>
+                                {{/if}}
+
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 d-grid"><input class="btn btn-dark" type="submit" name="update"
+                                            value="Update" />
+                                    </div>
+                                </div>
+                            </form>
+                            <hr class="my-4">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Footer -->
+        {{>footer}}
+
+
+        <!-- Back to top -->
+        <div class="btn-back-to-top" id="myBtn">
+            <span class="symbol-btn-back-to-top">
+                <i class="zmdi zmdi-chevron-up"></i>
+            </span>
+        </div>
+
+        <!--===============================================================================================-->
+        <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/bootstrap/js/popper.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/select2/select2.min.js"></script>
+        <script>
+            $(".js-select2").each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function () {
+                $(this).css('position', 'relative');
+                $(this).css('overflow', 'hidden');
+                var ps = new PerfectScrollbar(this, {
+                    wheelSpeed: 1,
+                    scrollingThreshold: 1000,
+                    wheelPropagation: false,
+                });
+
+                $(window).on('resize', function () {
+                    ps.update();
+                })
+            });
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#mobile-form').validate({
+                    rules: {
+                        mobile: {
+                            required: true,
+                            range: [6000000000, 9999999999],
+                            minlength: 10,
+                            maxlength: 10,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        mobile: {
+                            range: "Please enter 1st digit between 6 to 9."
+                        }
+                    }
+                });
+            })
+        </script>
+
+        <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!--===============================================================================================-->
+        <script src="/js/main.js"></script>
+
+</body>
+
+</html>

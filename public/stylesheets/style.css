@@ -1,0 +1,15 @@
+
+.pryingchess{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.glowing-border {
+    border: 1px solid #d1d1d1;
+    height: 2.3rem;
+    border-radius: 7px;
+}
+
+.glowing-border:focus { 
+    outline: none;
+    border-color: #f06464;
+    box-shadow: 0 0 10px #ff7d7d;
+}

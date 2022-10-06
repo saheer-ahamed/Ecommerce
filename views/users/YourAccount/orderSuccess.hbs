@@ -1,0 +1,155 @@
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/css/util.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<style>
+    .error {
+        color: rgba(179, 0, 0, 0.842);
+    }
+</style>
+</head>
+
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            {{>user-header}}
+
+
+
+
+            {{!-- Invoice --}}
+
+            <div class="container mt-5 mb-5">
+
+                <div class="row d-flex justify-content-center">
+
+                    <div class="col-md-8">
+
+                        <div class="card">
+
+
+                            <div class="text-center mt-5 justify-content-center">
+
+                                <img src="/images/icons/logo-01.png">
+
+                            </div>
+
+                            <div class="invoice p-5">
+
+                                <h5 class="text-center">Your order Confirmed!</h5>
+
+                                <span class="font-weight-bold d-block mt-4">Hello, {{eachAddress.fullName}}</span>
+                                <span>You order has been confirmed and will be shipped in next two days!</span>
+
+
+                                <p class="mt-3">We will be sending shipping confirmation email when the item shipped
+                                    successfully!
+                                </p>
+                                <p class="font-weight-bold mb-0">Thanks for shopping with us!</p>
+                                <span>PRYINGCHESS</span>
+
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="d-flex mt-3 justify-content-end">
+                            <a href="/yourOrders" class="btn btn-dark text-white  mr-3">Go to Your Orders</a>
+                            <a href="/shop" class="btn btn-light text-dark border border-dark">Get back to shopping!</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <!-- Footer -->
+            {{>footer}}
+
+
+            <!-- Back to top -->
+            <div class="btn-back-to-top" id="myBtn">
+                <span class="symbol-btn-back-to-top">
+                    <i class="zmdi zmdi-chevron-up"></i>
+                </span>
+            </div>
+
+            <!--===============================================================================================-->
+            <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/animsition/js/animsition.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/bootstrap/js/popper.js"></script>
+            <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/select2/select2.min.js"></script>
+            <script>
+                $(".js-select2").each(function () {
+                    $(this).select2({
+                        minimumResultsForSearch: 20,
+                        dropdownParent: $(this).next('.dropDownSelect2')
+                    });
+                })
+            </script>
+            <!--===============================================================================================-->
+            <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script>
+                $('.js-pscroll').each(function () {
+                    $(this).css('position', 'relative');
+                    $(this).css('overflow', 'hidden');
+                    var ps = new PerfectScrollbar(this, {
+                        wheelSpeed: 1,
+                        scrollingThreshold: 1000,
+                        wheelPropagation: false,
+                    });
+
+                    $(window).on('resize', function () {
+                        ps.update();
+                    })
+                });
+            </script>
+
+            <script>
+
+            </script>
+
+
+            <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!--===============================================================================================-->
+            <script src="/js/main.js"></script>
+
+</body>
+
+</html>

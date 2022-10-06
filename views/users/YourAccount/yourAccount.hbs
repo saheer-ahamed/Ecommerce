@@ -1,0 +1,160 @@
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="/css/util.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+<style>
+    .error {
+        color: rgba(179, 0, 0, 0.842);
+    }
+</style>
+</head>
+
+<body class="animsition">
+
+    <!-- Header -->
+    <header class="header-v4">
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            {{>user-header}}
+            <hr>
+
+            <div class="mb-3 mt-3">
+                <div class="container">
+                    <h3 class="mx-5 mt-2 text-dark fw-400">
+                        Your Account
+                    </h3>
+                    <hr>
+                    <div class="row mt-5 m-3">
+                        <a href="/yourOrders" style="color: #000;">
+                            <div class="col">
+                                <div class="card" style="width: 15rem;">
+                                    <div class="card-body">
+                                        <ul style="text-decoration: none;">
+                                            <li>
+                                                <h4>Your Orders</h4>
+                                            </li>
+                                            <li class="mt-2">Track, return and buy things again</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/userProfile" style="color: #000;">
+                            <div class="col">
+                                <div class="card" style="width: 15rem;">
+                                    <div class="card-body">
+                                        <ul style="text-decoration: none;">
+                                            <li>
+                                                <h4>Login & Security</h4>
+                                            </li>
+                                            <li class="mt-2">Edit login, name and mobile number.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/yourAddresses" style="color: #000;">
+                            <div class="col">
+                                <div class="card" style="width: 15rem;">
+                                    <div class="card-body">
+                                        <ul style="text-decoration: none;">
+                                            <li>
+                                                <h4>Your Addresses</h4>
+                                            </li>
+                                            <li class="mt-2">Edit addresses for orders and gifts.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Back to top -->
+            <div class="btn-back-to-top" id="myBtn">
+                <span class="symbol-btn-back-to-top">
+                    <i class="zmdi zmdi-chevron-up"></i>
+                </span>
+            </div>
+
+            <!--===============================================================================================-->
+            <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/animsition/js/animsition.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/bootstrap/js/popper.js"></script>
+            <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/select2/select2.min.js"></script>
+            <script>
+                $(".js-select2").each(function () {
+                    $(this).select2({
+                        minimumResultsForSearch: 20,
+                        dropdownParent: $(this).next('.dropDownSelect2')
+                    });
+                })
+            </script>
+            <!--===============================================================================================-->
+            <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+            <!--===============================================================================================-->
+            <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+            <script>
+                $('.js-pscroll').each(function () {
+                    $(this).css('position', 'relative');
+                    $(this).css('overflow', 'hidden');
+                    var ps = new PerfectScrollbar(this, {
+                        wheelSpeed: 1,
+                        scrollingThreshold: 1000,
+                        wheelPropagation: false,
+                    });
+
+                    $(window).on('resize', function () {
+                        ps.update();
+                    })
+                });
+            </script>
+
+
+            <style>
+                .card {
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+                    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+                    cursor: pointer;
+                }
+
+                .card:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+                }
+            </style>
+
+
+            <!--===============================================================================================-->
+            <script src="/js/main.js"></script>
+
+</body>
+
+</html>
