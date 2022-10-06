@@ -75,7 +75,7 @@ let verifyAdmin = (req, res, next) => {
 //.......................................................................
 
 const adminEmail = "adminChess@gmail.com"
-const adminPass = '1234';
+const adminPass = '67890';
 
 
 // .......Admin Login.......

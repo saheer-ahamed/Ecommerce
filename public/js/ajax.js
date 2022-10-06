@@ -79,22 +79,6 @@ function deleteAddress(addressId) {
     })
 }
 
-$("#checkout-form").submit((e) => {
-    e.preventDefault()
-    $.ajax({
-        url: '/placed-order',
-        method: 'post',
-        data: $('#checkout-form').serialize(),
-        success: (response) => {
-            if (response.status) {
-                razorpayPayment(response)
-            } else {
-                location.href = '/orderSuccess';
-            }
-        }
-    })
-})
-
 function razorpayPayment(orderData) {
 
     var options = {
