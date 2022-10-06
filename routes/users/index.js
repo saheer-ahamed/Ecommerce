@@ -153,7 +153,7 @@ router.get('/cart/checkout', verifyLogin, verifyCart, async (req, res, next) => 
     const coupons = await couponHelpers.viewCoupons()
     console.log(coupons);
     await addressHelpers.getAddresses(req.session.user._id).then((allAddresses) => {
-      const eachAddresses = allAddresses.addresses;
+      const eachAddresses = allAddresses?.addresses;
       const coupon = req.session?.couponDetails
 
       fullCartProds.Total = Number(fullCartProds.SubTotal) - Number(coupon?.discount || 0)

@@ -487,21 +487,23 @@
                 }
             </script>
 
-            
+
             <script>
-                $("#checkout-form").submit((e) => {
-                    e.preventDefault()
-                    $.ajax({
-                        url: '/placed-order',
-                        method: 'post',
-                        data: $('#checkout-form').serialize(),
-                        success: (response) => {
-                            if (response.status) {
-                                razorpayPayment(response)
-                            } else {
-                                location.href = '/orderSuccess';
+                $(document).ready(function () {
+                    $("#checkout-form").submit((e) => {
+                        e.preventDefault()
+                        $.ajax({
+                            url: '/placed-order',
+                            method: 'post',
+                            data: $('#checkout-form').serialize(),
+                            success: (response) => {
+                                if (response.status) {
+                                    razorpayPayment(response)
+                                } else {
+                                    location.href = '/orderSuccess';
+                                }
                             }
-                        }
+                        })
                     })
                 })
             </script>
