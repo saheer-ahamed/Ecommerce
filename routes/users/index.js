@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const collection = require('../../config/collections');
+const udata = require('../../config/Schemas');
+const mongoose = require('mongoose')
 const productHelpers = require('../../helpers/product-helpers')
 const cartHelpers = require('../../helpers/cart_helpers');
 const wishlistHelpers = require('../../helpers/wishlist_helpers')
@@ -8,6 +11,7 @@ const orderHelpers = require('../../helpers/orders-helpers')
 const userHelpers = require('../../helpers/user-helpers');
 const couponHelpers = require('../../helpers/coupon-helpers');
 const bannerHelpers = require('../../helpers/banner-helpers');
+const Contact = mongoose.model(collection.CONTACT_COLLECTION, udata.contactSchema);
 
 // Verify Login
 
@@ -401,6 +405,35 @@ router.get('/cancelOrder/:id', (req, res, next) => {
   }).catch((err) => {
     next()
   })
+})
+
+// About Page
+
+router.get('/about', (req, res, next) => {
+  if (req.session.loggedIn) {
+    res.render('users/about', { user: true })
+  } else {
+    res.render('users/about', { user: false })
+  }
+})
+
+// Contact Page
+
+router.get('/contact', (req, res, next) => {
+  if (req.session.loggedIn) {
+    res.render('users/contact', { user: true })
+  } else {
+    res.render('users/contact', { user: false })
+  }
+})
+
+router.post('/contact', async (req, res, next) => {
+  await Contact.create({
+    userID: req?.session?.user?._id,
+    email : req.body.email,
+    msg: req.body.msg
+  })
+  res.json({ message: "Message sent successfully."})
 })
 
 // Logout router

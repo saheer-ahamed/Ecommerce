@@ -275,5 +275,15 @@ module.exports = {
             type: String,
             required: true
         }
+    }),
+    contactSchema: new mongoose.Schema({
+        userID: {
+            type: mongoose.Schema.Types.ObjectId
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        msg: String
     })
 }
