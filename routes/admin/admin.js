@@ -20,6 +20,7 @@ Handlebars.registerHelper("inc", function (value, options) {
 
 const multer = require('multer')
 const path = require('path');
+const { deleteAddress } = require("../../helpers/address-helpers");
 
 const storage = multer.diskStorage({
   destination: './public/images/productsImg/',
@@ -137,7 +138,8 @@ router.get("/Products/viewProducts", function (req, res, next) {
   try {
     if (req.session.adminLoggedin) {
       productHelpers.viewProduct().then((proDetails) => {
-        res.render("admin/Products/viewProducts", { proDetails });
+        const errDelete = req.flash('message')
+        res.render("admin/Products/viewProducts", { proDetails, errDelete });
       })
     } else {
       res.redirect('/admin')
@@ -211,7 +213,11 @@ router.post("/Products/editproduct/:id", (req, res, next) => {
 
 router.get("/deleteProduct/:id", function (req, res, next) {
   productHelpers.deleteProduct(req.params.id).then((data) => {
-    res.json({status: true})
+    if (data.proError) {
+      req.flash('message', "This Product is already included in someone's cart or wishlists. It can't be deleted!")
+    }
+    res.json({ status: true })
+
   }).catch((err) => {
     next()
   })
@@ -222,9 +228,7 @@ router.get("/deleteProduct/:id", function (req, res, next) {
 router.get("/Users", async function (req, res, next) {
   if (req.session.adminLoggedin) {
     userHelpers.getAllUsers().then((userview) => {
-      res.render("admin/usersdata", { userview }).catch((err) => {
-        next()
-      })
+      res.render("admin/usersdata", { userview })
     })
   } else {
     res.redirect('/admin')
@@ -257,7 +261,8 @@ router.get('/active-user/:id', (req, res, next) => {
 router.get("/Category/viewCategory", verifyAdmin, function (req, res, next) {
   if (req.session.adminLoggedin) {
     categoryHelpers.viewAllCategories().then((categoryView) => {
-      res.render("admin/Category/viewCategory", { categoryView });
+      const errorMessage = req.flash('message')
+      res.render("admin/Category/viewCategory", { categoryView, errorMessage });
     }).catch((error) => {
       next()
     })
@@ -317,6 +322,10 @@ router.post("/Category/updateCategory/:id", async (req, res, next) => {
 
 router.get("/Category/deleteCategory/:id", function (req, res, next) {
   categoryHelpers.deleteCategory(req.params.id).then((data) => {
+    if (data.catError) {
+      req.flash('message', "Category is already included in some products. Can't be deleted!");
+    }
+    console.log(req.flash)
     res.redirect('/admin/Category/viewCategory')
   }).catch((err) => {
     next()

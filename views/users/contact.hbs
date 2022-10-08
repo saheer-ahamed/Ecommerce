@@ -29,6 +29,13 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
+
+    <style>
+        .error{
+            color: red;
+            margin: 0 0 0 0;
+        }
+    </style>
 </head>
 
 <body class="animsition">
@@ -63,15 +70,15 @@
                                     Send Us A Message
                                 </h4>
 
-                                <div class="bor8 m-b-20 how-pos4-parent">
-                                    <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email"
-                                        placeholder="Your Email Address" required>
-                                    <img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
+                                <div class=" m-b-20 how-pos4-parent">
+                                    <input class="bor8 stext-111 cl2 plh3 size-116 p-l-28 p-r-30" type="text" name="email"
+                                        id="email" placeholder="Your Email Address">
+                                    {{!-- <img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON"> --}}
                                 </div>
 
-                                <div class="bor8 m-b-30">
-                                    <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg"
-                                        placeholder="How Can We Help?" required></textarea>
+                                <div class="m-b-30">
+                                    <textarea class="bor8 stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" id="msg"
+                                        placeholder="How Can We Help?"></textarea>
                                 </div>
 
                                 <button
@@ -188,6 +195,8 @@
                 });
             </script>
 
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
             <script>
                 $(document).ready(() => {
                     $("#contact-form").submit((e) => {
@@ -200,13 +209,29 @@
                                 swal({
                                     title: "Good job!",
                                     text: "Message Sent Successfully!",
-                                    icon: "success",
-                                    button: "Aww yiss!",
+                                    icon: "success"
                                 });
+                                $("#email").val('')
+                                $("#msg").val('')  
                             }
                         })
                     })
                 })
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $("#contact-form").validate({
+                        rules: {
+                            email: {
+                                email: true,
+                                required: true,
+                            },
+                            msg: {
+                                required: true
+                            }
+                        }
+                    });
+                });
             </script>
             <!--===============================================================================================-->
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>

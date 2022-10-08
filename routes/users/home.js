@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
     let cartCount = await cartHelpers.getCartCount(req.session.user._id)
     const banners = await bannerHelpers.viewBanners()
     productHelpers.viewProduct().then((data) => {
-      res.render('users/home', { data, cartCount, banners})
+      res.render('users/home', { data, cartCount, banners, home: true})
     }).catch((err) => {
       next()
     })

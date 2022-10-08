@@ -25,21 +25,42 @@
         <!-- Menu desktop -->
         <div class="menu-desktop">
             <ul class="main-menu">
+                {{#if home}}
                 <li class="active-menu">
                     <a href="/">Home</a>
                 </li>
-
+                {{else}}
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                {{/if}}
+                {{#if shop}}
+                <li class="active-menu">
+                    <a href="/shop">Shop</a>
+                </li>
+                {{else}}
                 <li>
                     <a href="/shop">Shop</a>
                 </li>
-
+                {{/if}}
+                {{#if about}}
+                <li class="active-menu">
+                    <a href="/about">About</a>
+                </li>
+                {{else}}
                 <li>
                     <a href="/about">About</a>
                 </li>
-
+                {{/if}}
+                {{#if contact}}
+                <li class="active-menu">
+                    <a href="/contact">Contact</a>
+                </li>
+                {{else}}
                 <li>
                     <a href="/contact">Contact</a>
                 </li>
+                {{/if}}
             </ul>
         </div>
 

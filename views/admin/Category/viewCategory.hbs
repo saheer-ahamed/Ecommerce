@@ -138,6 +138,11 @@
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">List of Categories</h6>
                             <div class="table-responsive">
+                                {{#if errorMessage}}
+                                <div class="alert text-center alert-danger" role="alert">
+                                    {{errorMessage}}
+                                </div>
+                                {{/if}}
                                 <table class="table" id="userTable">
                                     <thead>
                                         <tr>

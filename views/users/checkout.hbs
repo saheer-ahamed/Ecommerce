@@ -381,57 +381,6 @@
             </script>
 
 
-
-            {{!--
-            <script>
-                $(document).ready(function () {
-                    $("#needs-validation").validate({
-                        rules: {
-                            firstName: {
-                                required: true
-                            },
-                            lastName: {
-                                required: true
-                            },
-                            userName: {
-                                required: true
-                            },
-                            email: {
-                                email: true,
-                                required: true,
-                            },
-                            deliveryAddress: {
-                                required: true,
-                            },
-                            mobile: {
-                                required: true,
-                                range: [6000000000, 9999999999],
-                                minlength: 10,
-                                maxlength: 10,
-                                digits: true
-                            },
-                            country: {
-                                required: true,
-                            },
-                            state: {
-                                required: true,
-                            },
-                            zipCode: {
-                                required: true,
-                                digits: true,
-                                minlength: 5,
-                                maxlength: 10
-                            },
-                        },
-                        messages: {
-                            mobile: {
-                                range: "Please enter 1st digit between 6 to 9."
-                            }
-                        }
-                    });
-                });
-
-            </script> --}}
             <script>
 
                 document.getElementById("copyButton").addEventListener("click", function () {
@@ -487,6 +436,48 @@
                     }
                     return succeed;
                 }
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $("#checkout-form").validate({
+                        rules: {
+                            fullName: {
+                                required: true
+                            },
+                            apartment: {
+                                required: true
+                            },
+                            street: {
+                                required: true,
+                            },
+                            landmark: {
+                                required: true,
+                            },
+                            mobile: {
+                                required: true,
+                                range: [6000000000, 9999999999],
+                                minlength: 10,
+                                maxlength: 10,
+                                digits: true
+                            },
+                            pincode: {
+                                required: true,
+                                minlength: 6,
+                                maxlength: 10,
+                                digits: true
+                            }
+                        },
+                        messages: {
+                            mobile: {
+                                range: "Please enter 1st digit between 6 to 9."
+                            }
+                        }
+                    });
+                });
+
             </script>
 
 

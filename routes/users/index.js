@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
   } else {
     const banners = await bannerHelpers.viewBanners()
     productHelpers.viewProduct().then((data) => {
-      res.render('indexes/index', { data, cartCount: 0, banners })
+      res.render('indexes/index', { data, cartCount: 0, banners, home: true })
     }).catch((err) => {
       next()
     })
@@ -71,13 +71,13 @@ router.get('/shop', async (req, res, next) => {
   if (req.session.loggedIn) {
     let cartCount = await cartHelpers.getCartCount(req.session.user._id)
     productHelpers.viewProduct().then((data) => {
-      res.render('users/shop', { data, user: true, cartCount })
+      res.render('users/shop', { data, user: true, cartCount, shop: true, false: true })
     }).catch((err) => {
       next()
     })
   } else {
     productHelpers.viewProduct().then((data) => {
-      res.render('users/shop', { data, user: false, cartCount: 0 })
+      res.render('users/shop', { data, cartCount: 0, shop: true })
     }).catch((err) => {
       next()
     })
@@ -100,12 +100,16 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
   })
 });
 
-router.get('/addToCart/:id/:quantity/:sellprice', verifyLogin, (req, res, next) => {
-  cartHelpers.addToCart(req.params.id, req.session.user._id, req.params.quantity, req.params.sellprice).then(() => {
-    res.json({ status: true })
-  }).catch((err) => {
-    next()
-  })
+router.get('/addToCart/:id/:quantity/:sellprice', (req, res, next) => {
+  if (req.session.loggedIn) {
+    cartHelpers.addToCart(req.params.id, req.session.user._id, req.params.quantity, req.params.sellprice).then(() => {
+      res.json({ status: true })
+    }).catch((err) => {
+      next()
+    })
+  } else {
+    res.json({ status: false })
+  }
 });
 
 router.get('/removeCartItem/:id', verifyLogin, (req, res, next) => {
@@ -236,7 +240,8 @@ router.post('/verify-payment', (req, res, next) => {
 
 router.get('/orderSuccess', verifyLogin, async (req, res, next) => {
   if (req.session.placeOrder) {
-    res.render('users/YourAccount/orderSuccess')
+    let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+    res.render('users/YourAccount/orderSuccess', {cartCount})
     req.session.placeOrder = false;
   } else {
     res.redirect('/cart')
@@ -245,17 +250,19 @@ router.get('/orderSuccess', verifyLogin, async (req, res, next) => {
 
 // User Account
 
-router.get('/yourAccount', verifyLogin, (req, res, next) => {
-  res.render('users/YourAccount/yourAccount');
+router.get('/yourAccount', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+  res.render('users/YourAccount/yourAccount', cartCount);
 })
 
 // Your Address Page
 
 router.get('/yourAddresses', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   await addressHelpers.getAddresses(req.session.user._id).then((allAddress) => {
     req.session.allAddress = allAddress;
     let eachAddresses = req.session.allAddress.addresses;
-    res.render('users/YourAccount/yourAddresses', { eachAddresses });
+    res.render('users/YourAccount/yourAddresses', { eachAddresses, cartCount });
   }).catch((err) => {
     next()
   })
@@ -271,9 +278,10 @@ router.post('/addAddress', verifyLogin, (req, res, next) => {
 
 })
 
-router.get('/editAddress/:id', verifyLogin, (req, res, next) => {
+router.get('/editAddress/:id', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   addressHelpers.getbtnAddress(req.session.user._id, req.params.id).then((addressData) => {
-    res.render('users/YourAccount/editAddress', { addressData, updated: req.session.updated })
+    res.render('users/YourAccount/editAddress', { addressData, updated: req.session.updated, cartCount })
     req.session.updated = false;
   }).catch((err) => {
     next()
@@ -299,9 +307,10 @@ router.get('/deleteAddress/:id', (req, res, next) => {
 
 // User Profile
 
-router.get('/userProfile', verifyLogin, (req, res, next) => {
+router.get('/userProfile', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   userHelpers.getUserDetails(req.session.user._id).then((userDetails) => {
-    res.render('users/YourAccount/userProfile', { userDetails })
+    res.render('users/YourAccount/userProfile', { userDetails, cartCount })
   }).catch((err) => {
     next()
   })
@@ -315,8 +324,9 @@ router.post('/updateProfile', verifyLogin, (req, res, next) => {
   })
 })
 
-router.get('/changePassword', verifyLogin, (req, res, next) => {
-  res.render('users/YourAccount/change-password', { verification: req.session.verification, errorPass: req.session.errorpass })
+router.get('/changePassword', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+  res.render('users/YourAccount/change-password', { verification: req.session.verification, errorPass: req.session.errorpass, cartCount })
   req.session.verification = false;
   req.session.errorpass = false;
 })
@@ -335,9 +345,10 @@ router.post('/updatePassword', verifyLogin, (req, res, next) => {
   })
 })
 
-router.get('/changeMobile', verifyLogin, (req, res, next) => {
+router.get('/changeMobile', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   userHelpers.getUserDetails(req.session.user._id).then((userDetails) => {
-    res.render('users/YourAccount/change-mobile', { userDetails, numExists: req.session.numExists })
+    res.render('users/YourAccount/change-mobile', { userDetails, numExists: req.session.numExists, cartCount })
     req.session.numExists = false;
   }).catch((err) => {
     next()
@@ -358,8 +369,9 @@ router.post('/updateMobile', verifyLogin, (req, res, next) => {
   })
 })
 
-router.get('/mobile-otp', verifyLogin, (req, res, next) => {
-  res.render('users/YourAccount/mobile-otp', { errOTP: req.session.errOTP });
+router.get('/mobile-otp', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+  res.render('users/YourAccount/mobile-otp', { errOTP: req.session.errOTP, cartCount });
   req.session.errOTP = false;
 })
 
@@ -383,17 +395,19 @@ router.post('/mobileOtp', verifyLogin, (req, res, next) => {
 
 // Your Orders Page
 
-router.get('/yourOrders', verifyLogin, (req, res, next) => {
+router.get('/yourOrders', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   orderHelpers.viewUserOrders(req.session.user._id).then((orderData) => {
-    res.render('users/YourAccount/yourOrders', { orderData });
+    res.render('users/YourAccount/yourOrders', { orderData, cartCount });
   }).catch((err) => {
     next()
   })
 })
 
-router.get('/orderDetails/:id', verifyLogin, (req, res, next) => {
+router.get('/orderDetails/:id', verifyLogin, async (req, res, next) => {
+  let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   orderHelpers.eachOrder(req.params.id).then((data) => {
-    res.render('users/YourAccount/orderDetails', { data })
+    res.render('users/YourAccount/orderDetails', { data, cartCount })
   }).catch((err) => {
     next()
   })
@@ -409,31 +423,41 @@ router.get('/cancelOrder/:id', (req, res, next) => {
 
 // About Page
 
-router.get('/about', (req, res, next) => {
+router.get('/about', async (req, res, next) => {
   if (req.session.loggedIn) {
-    res.render('users/about', { user: true })
+    let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+    res.render('users/about', { user: true, about: true, cartCount })
   } else {
-    res.render('users/about', { user: false })
+    res.render('users/about', { user: false, about: true, cartCount: 0 })
   }
 })
 
 // Contact Page
 
-router.get('/contact', (req, res, next) => {
-  if (req.session.loggedIn) {
-    res.render('users/contact', { user: true })
-  } else {
-    res.render('users/contact', { user: false })
+router.get('/contact', async (req, res, next) => {
+  try {
+    if (req.session.loggedIn) {
+      let cartCount = await cartHelpers.getCartCount(req.session.user._id)
+      res.render('users/contact', { user: true, contact: true, cartCount })
+    } else {
+      res.render('users/contact', { user: false, contact: true, cartCount: 0 })
+    }
+  } catch (error) {
+    next()
   }
 })
 
 router.post('/contact', async (req, res, next) => {
-  await Contact.create({
-    userID: req?.session?.user?._id,
-    email : req.body.email,
-    msg: req.body.msg
-  })
-  res.json({ message: "Message sent successfully."})
+  try {
+    await Contact.create({
+      userID: req?.session?.user?._id,
+      email: req.body.email,
+      msg: req.body.msg
+    })
+    res.json({ message: "Message sent successfully." })
+  } catch (error) {
+    next()
+  }
 })
 
 // Logout router

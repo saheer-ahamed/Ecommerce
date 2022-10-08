@@ -101,23 +101,28 @@
 								<div class="block2-txt flex-w flex-t p-t-14">
 									<div class="block2-txt-child1 flex-col-l ">
 										<a href="/productDetails/{{this._id}}"
-											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 text-dark">
 											{{this.productName}}
 										</a>
-
-										<span class="stext-105 cl3">
-											₹ {{this.sellPrice}}
-										</span>
+										<div class="d-flex flex-column">
+											<span class="stext-105 cl3">
+												<del class="text-muted">₹ {{this.Price}}</del>
+											</span>
+											<span class="stext-105 cl3">
+												<strong>₹ {{this.sellPrice}}</strong>
+											</span>
+										</div>
 									</div>
-							
 									<div>
 										<button onclick="addToCart('{{this._id}}','1','{{this.sellPrice}}')">
 											<i class="fa fa-cart-plus" style="font-size:24px"></i>
 										</button>
 									</div>
-							
+
 									<div class="block2-txt-child2 flex-r p-t-3">
-										<button onclick="addToWishlist('{{this._id}}')" class="btn-addwish-b2 dis-block pos-relative" id="btnWish" style="color: rgb(255, 0, 0);">
+										<button onclick="addToWishlist('{{this._id}}')"
+											class="btn-addwish-b2 dis-block pos-relative" id="btnWish"
+											style="color: rgb(255, 0, 0);">
 											<i class="fa fa-heart-o" aria-hidden="true"></i>
 										</button>
 									</div>
@@ -127,12 +132,12 @@
 						{{/each}}
 					</div>
 
-					<!-- Load more -->
+					{{!-- <!-- Load more -->
 					<div class="flex-c-m flex-w w-full p-t-45">
 						<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 							Load More
 						</a>
-					</div>
+					</div> --}}
 				</div>
 			</section>
 

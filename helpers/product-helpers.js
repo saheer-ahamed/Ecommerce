@@ -4,6 +4,8 @@ var udata = require("../config/Schemas");
 const mongoose = require("mongoose");
 const Products = mongoose.model(collection.PRODUCT_COLLECTION, udata.productSchema);
 const Categories = mongoose.model(collection.CATEGORY_COLLECTION, udata.categorySchema);
+const Wishlist = mongoose.model(collection.WISHLIST_COLLECTION, udata.wishlistSchema);
+const Cart = mongoose.model(collection.CART_COLLECTION, udata.cartSchema);
 const fs = require('fs')
 
 
@@ -69,7 +71,7 @@ module.exports = {
 
             if (imgData.length === 0) {
                 productData.Image = oldProImage.Image
-            }else{
+            } else {
                 const imagenames = imgData.map((values) => {
                     return values.filename
                 })
@@ -78,7 +80,7 @@ module.exports = {
                     fs.existsSync('./public/images/productsImg/' + values) && fs.unlinkSync('./public/images/productsImg/' + values)
                 })
             }
-            
+
             oldProImage.replaceOne(productData).then((data) => {
                 resolve(data)
             }).catch((err) => reject(err))
@@ -86,14 +88,24 @@ module.exports = {
     },
     deleteProduct: (productID) => {
         return new Promise(async (resolve, reject) => {
-            const proData = await Products.findById({ _id: productID })
-            proData.Image.map((values) => {
-                fs.unlinkSync('./public/images/productsImg/' + values)
-            })
+            const response = {};
+            const checkProduct = await Cart.findOne({ 'cart.product': productID })
+            const checkWishPro = await Wishlist.findOne({ 'wishlist.product': productID })
 
-            Products.deleteOne({ _id: ObjectId(productID) }).then((response) => {
+            if (checkProduct || checkWishPro) {
+                response.proError = true
                 resolve(response)
-            }).catch((err) => reject(err))
+            } else {
+                const proData = await Products.findById({ _id: productID })
+                proData.Image.map((values) => {
+                    fs.unlinkSync('./public/images/productsImg/' + values)
+                })
+
+                Products.deleteOne({ _id: ObjectId(productID) }).then((response) => {
+                    resolve(response)
+                }).catch((err) => reject(err))
+            }
+
         })
     },
     eachProduct: (productID) => {

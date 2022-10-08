@@ -141,6 +141,11 @@
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Products Details</h6>
                             <div class="table-responsive">
+                                {{#if errDelete}}
+                                <div class="alert text-center alert-danger" role="alert">
+                                    {{errDelete}}
+                                </div>
+                                {{/if}}
                                 <table class="table" id="productsTable">
                                     <thead>
                                         <tr>

@@ -213,7 +213,7 @@ module.exports = {
     },
     eachDaySalesDetails: () => {
         return new Promise((resolve, reject) => {
-            Orders.aggregate([{
+            Orders.aggregate([{$match: {refunded: "false"}},{
                 $group: {
                     _id: {
                         day: {

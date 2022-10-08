@@ -14,11 +14,30 @@ function addToCart(proId, quantity, sellprice) {
                 // count = parseInt(count) + 1
                 $('#cartCount').attr("data-notify", count)
                 location.href = "/cart";
+            }else{
+                location.href = '/login'
             }
         }
     })
     // }
 }
+
+// function plusMinus(proId, quantity, sellprice) {
+
+//     $.ajax({
+//         url: '/addToCart/' + proId + '/' + quantity + '/' + sellprice,
+//         method: 'get',
+//         success: (response) => {
+//             if (response.status) {
+//                 let count = $('#cartCount').attr("data-notify")
+//                 // count = parseInt(count) + 1
+//                 $('#cartCount').attr("data-notify", count)
+//                 $('#cartTable').load(location.href + '#cartTable')
+//             }
+//         }
+//     })
+//     // }
+// }
 
 function myFunction(productId, sellprice) {
     var itemQuantity = document.getElementById("quantityValue").value;
@@ -178,9 +197,7 @@ function deleteProduct(productId) {
             url: '/admin/deleteProduct/' + productId,
             method: 'get',
             success: (response) => {
-                if (response.status) {
-                    $('#productsTable').load(location.href + ' #productsTable')
-                }
+                location.reload()
             }
         })
     }

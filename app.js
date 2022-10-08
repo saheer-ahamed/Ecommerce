@@ -5,7 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
+const flash = require('connect-flash');
 
 
 var indexRouter = require('./routes/users/index');
@@ -21,7 +22,7 @@ const { response } = require('express');
 // view engine setup
 
 mongoose.connect(process.env.SERVER).then(() => {
-  console.log("your system is hacked");
+  console.log("Database Connected");
 })
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -58,6 +59,7 @@ app.use(session({
   secret: 'Key',
   cookie: {maxAge: 600000}
 }))
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
