@@ -243,6 +243,7 @@ router.get('/orderSuccess', verifyLogin, async (req, res, next) => {
     let cartCount = await cartHelpers.getCartCount(req.session.user._id)
     res.render('users/YourAccount/orderSuccess', {cartCount})
     req.session.placeOrder = false;
+    console.log('Success');
   } else {
     res.redirect('/cart')
   }
