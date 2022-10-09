@@ -253,7 +253,7 @@ router.get('/orderSuccess', verifyLogin, async (req, res, next) => {
 
 router.get('/yourAccount', verifyLogin, async (req, res, next) => {
   let cartCount = await cartHelpers.getCartCount(req.session.user._id)
-  res.render('users/YourAccount/yourAccount', cartCount);
+  res.render('users/YourAccount/yourAccount', {cartCount});
 })
 
 // Your Address Page
@@ -262,7 +262,7 @@ router.get('/yourAddresses', verifyLogin, async (req, res, next) => {
   let cartCount = await cartHelpers.getCartCount(req.session.user._id)
   await addressHelpers.getAddresses(req.session.user._id).then((allAddress) => {
     req.session.allAddress = allAddress;
-    let eachAddresses = req.session.allAddress.addresses;
+    let eachAddresses = req.session?.allAddress?.addresses;
     res.render('users/YourAccount/yourAddresses', { eachAddresses, cartCount });
   }).catch((err) => {
     next()
