@@ -5,6 +5,7 @@ var bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 const Users = mongoose.model(collection.USER_COLLECTION, udata.userSchema);
+const Admin = mongoose.model(collection.ADMIN_COLLECTION, udata.adminSchema);
 
 module.exports = {
   signUp: (userData) => {
@@ -12,23 +13,23 @@ module.exports = {
       try {
         let user = await Users.findOne({ email: userData.email });
         let userphone = await Users.findOne({ mobile: userData.mobile });
-  
+
         if (!user && !userphone) {
           const accountSid = process.env.TWILIO_ACCOUNT_SID;
           const authToken = process.env.TWILIO_AUTH_TOKEN;
           const client = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
-  
+
           client.verify.v2.services(process.env.SERVICESID)
             .verifications
             .create({ to: `+91${userData.mobile}`, channel: 'sms' })
             .then(verification => console.log(verification.sid));
           resolve(true)
-  
+
         } else {
           resolve(false)
-        }       
+        }
       } catch (error) {
-          reject(error)
+        reject(error)
       }
     })
   },
@@ -37,13 +38,13 @@ module.exports = {
       const accountSid = process.env.TWILIO_ACCOUNT_SID;
       const authToken = process.env.TWILIO_AUTH_TOKEN;
       const client = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
-  
+
       client.verify.v2.services(process.env.SERVICESID)
         .verifications
         .create({ to: `+91${userData.mobile}`, channel: 'sms' })
         .then(verification => console.log(verification.sid));
     } catch (error) {
-        reject(error)
+      reject(error)
     }
   },
   OTPVerify: (signupData, otpCode) => {
@@ -76,7 +77,7 @@ module.exports = {
         const userview = Users.find({}).lean();
         resolve(userview);
       } catch (error) {
-          reject(error)
+        reject(error)
       }
     });
   },
@@ -85,7 +86,7 @@ module.exports = {
       try {
         let response = {};
         let user = await Users.findOne({ email: userData.email });
-  
+
         if (user) {
           if (user.Active == false) {
             response.blocked = true;
@@ -105,9 +106,9 @@ module.exports = {
         } else {
           console.log("login failed");
           resolve({ status: false });
-        }       
+        }
       } catch (error) {
-          reject(error)
+        reject(error)
       }
     });
   },
@@ -115,21 +116,21 @@ module.exports = {
   blockUser: (userId) => {
     return new Promise((resolve, reject) => {
       Users.updateOne({ _id: ObjectId(userId) }, { Active: false }).then((data) => { resolve(data) })
-      .catch((err) => reject(err))
+        .catch((err) => reject(err))
     })
   },
 
   activeUser: (userId) => {
     return new Promise((resolve, reject) => {
       Users.findOneAndUpdate({ _id: ObjectId(userId) }, { Active: true }).then((data) => { resolve(data) })
-      .catch((err) => reject(err))
+        .catch((err) => reject(err))
     })
   },
 
   getUserDetails: (userId) => {
     return new Promise((resolve, reject) => {
       Users.findOne({ _id: userId }).lean().then((data) => { resolve(data) })
-      .catch((err) => reject(err))
+        .catch((err) => reject(err))
     })
   },
 
@@ -137,7 +138,7 @@ module.exports = {
     const { yourname, email } = newUserDetails;
     return new Promise((resolve, reject) => {
       Users.findOneAndUpdate({ _id: userId }, { yourname, email }).then(() => { resolve(true) })
-      .catch((err) => reject(err))
+        .catch((err) => reject(err))
     })
   },
 
@@ -159,9 +160,9 @@ module.exports = {
               resolve(response);
             }
           }).catch((err) => reject(err))
-        }       
+        }
       } catch (error) {
-          reject(error)
+        reject(error)
       }
     })
   },
@@ -173,7 +174,7 @@ module.exports = {
           const accountSid = process.env.TWILIO_ACCOUNT_SID;
           const authToken = process.env.TWILIO_AUTH_TOKEN;
           const client = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
-  
+
           client.verify.v2.services(process.env.SERVICESID)
             .verifications
             .create({ to: `+91${mobDetails.mobile}`, channel: 'sms' })
@@ -182,7 +183,7 @@ module.exports = {
         }
         if (mob) resolve(false)
       } catch (error) {
-          reject(error)
+        reject(error)
       }
     })
   },
@@ -197,7 +198,7 @@ module.exports = {
         .create({ to: '+91' + newMobile, code: otpCode.mobileotp })
         .then(async (verification_check) => {
           if (verification_check.status == "approved") {
-            Users.findOneAndUpdate({_id: userId}, {mobile: newMobile}).then((data) => {
+            Users.findOneAndUpdate({ _id: userId }, { mobile: newMobile }).then((data) => {
               resolve(data)
             }).catch((err) => reject(err))
           } else {
@@ -205,5 +206,31 @@ module.exports = {
           }
         }).catch((err) => reject(err))
     });
+  },
+  adminLogin: (adminData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let admin = await Admin.findOne({ email: adminData.adEmail });
+        const response = {}
+        
+        if (admin) {
+          bcrypt.compare(adminData.adPassword, admin.adminPassword).then((status) => {
+            if (status) {
+              response.status = true;
+              resolve(response);
+            } else {
+              response.status = false;
+              resolve(response);
+            }
+          }).catch((err) => reject(err))
+        } else {
+          console.log("login failed");
+          resolve({ status: false });
+        }
+      } catch (error) {
+        reject(error)
+      }
+
+    })
   }
 };

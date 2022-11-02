@@ -17,7 +17,13 @@ module.exports = {
             default: true
         }
     },
+
         { collection: 'Users' }),
+
+    adminSchema: new mongoose.Schema({
+        adminEmail: String,
+        adminPassword: String,
+    }),
 
     categorySchema: new mongoose.Schema({
         Name: {
@@ -200,14 +206,14 @@ module.exports = {
                 type: Number
             }
         }],
-        discount:{
+        discount: {
             type: Number,
             default: 0
         },
         SubTotal: {
             type: Number
         },
-        Total:{
+        Total: {
             type: Number
         },
         paymentMethod: {

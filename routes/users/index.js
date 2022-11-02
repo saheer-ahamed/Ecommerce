@@ -222,11 +222,8 @@ router.post('/placed-order', verifyLogin, async (req, res, next) => {
 // Veifying Payment
 
 router.post('/verify-payment', (req, res, next) => {
-  console.log(req.body);
   orderHelpers.verifyPayment(req.body).then(() => {
-    console.log('five');
     orderHelpers.changePaymentStatus(req.body['orderData[receipt]']).then(() => {
-      console.log('success2');
       res.json({ status: true })
     }).catch((err) => {
       next()

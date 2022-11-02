@@ -74,11 +74,6 @@ let verifyAdmin = (req, res, next) => {
 }
 
 //.......................................................................
-
-const adminEmail = "adminChess@gmail.com"
-const adminPass = '67890';
-
-
 // .......Admin Login.......
 
 router.get("/", function (req, res, next) {
@@ -119,14 +114,15 @@ router.get("/dashboard", async function (req, res, next) {
 
 router.post("/", function (req, res, next) {
   try {
-    if (req.body.adEmail === adminEmail && req.body.adPassword === adminPass) {
-      req.session.adminLoggedin = true;
-      res.redirect('/admin/dashboard');
-    }
-    else {
-      req.session.adminLoggedin = false;
-      res.redirect('/admin')
-    }
+    userHelpers.adminLogin(req.body).then((data) => {
+      if (data.status) {
+        req.session.adminLoggedin = true;
+        res.redirect('/admin/dashboard');
+      } else {
+        req.session.adminLoggedin = false;
+        res.redirect('/admin')
+      }
+    })
   } catch (err) {
     next()
   }
