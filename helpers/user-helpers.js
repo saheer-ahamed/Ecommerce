@@ -210,7 +210,7 @@ module.exports = {
   adminLogin: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let admin = await Admin.findOne({ email: adminData.adEmail });
+        let admin = await Admin.findOne({ adminEmail: adminData.adEmail });
         const response = {}
         
         if (admin) {
